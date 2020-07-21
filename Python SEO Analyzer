@@ -1,0 +1,18 @@
+import requests
+from requests_html import HTMLSession
+ 
+url = input('Please Enter URL :')
+ 
+try:
+    session = HTMLSession()
+    response = session.get(url)
+     
+except requests.exceptions.RequestException as e:
+    print(e)
+title =  response.html.find('title', first=True).text
+meta_desc =  response.html.xpath('//meta[@name="description"]/@content')
+h1 =  response.html.find('h1', first=True).text
+h2 =  response.html.find('h2', first=True).text
+h3 =  response.html.find('h3', first=True).text
+links = response.html.absolute_links
+print('Title Tag : {}\n\nMeta_Description:{}\n\nH1_Tag :{}\n\nH2_Tag :{}\n\nH3_Tag :{}\n\nLinks :{}'.format(title,meta_desc,h1,h2,h3,links))
